@@ -6,11 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
+    "@ai-sdk/azure": "^1.1.1",
+    "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.4",
     "next": "15.1.5",
+    "openai": "^4.80.0",
     "pg": "^8.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
