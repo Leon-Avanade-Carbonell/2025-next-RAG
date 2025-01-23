@@ -1,6 +1,6 @@
 {
-  "id": "59dae2df-1fda-41ce-b0dd-d4ca8a443f92",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "fce0d6d9-8581-4d09-9fe6-31955f66c79c",
+  "prevId": "59dae2df-1fda-41ce-b0dd-d4ca8a443f92",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -37,6 +37,37 @@
           "type": "vector(1536)",
           "primaryKey": false,
           "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pokemon": {
+      "name": "pokemon",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "p_id": {
+          "name": "p_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},

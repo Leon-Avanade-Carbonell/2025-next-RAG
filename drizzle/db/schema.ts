@@ -1,4 +1,4 @@
-import { index, pgTable, serial, text, vector } from 'drizzle-orm/pg-core';
+import { index, integer, pgTable, serial, text, timestamp, vector } from 'drizzle-orm/pg-core';
 export const guidesTable = pgTable(
   'guides',
   {
@@ -16,3 +16,15 @@ export const guidesTable = pgTable(
 export type InsertGuide = typeof guidesTable.$inferInsert
 export type SelectGuide = typeof guidesTable.$inferSelect
 
+export const pokemonTable = pgTable('pokemon', {
+  id: serial('id').primaryKey(),
+  pId: integer('p_id').notNull(),
+  name: text('name').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .notNull()
+    .$onUpdate(() => new Date()),
+})
+
+export type InsertPokemon = typeof pokemonTable.$inferInsert
+export type SelectPokemon = typeof pokemonTable.$inferSelect

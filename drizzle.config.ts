@@ -1,7 +1,4 @@
 import {defineConfig} from 'drizzle-kit'
-import { config } from 'dotenv';
-
-config({ path: '.env.local' });
 
 export default defineConfig({
     schema: './drizzle/db/schema.ts',
@@ -11,5 +8,9 @@ export default defineConfig({
         url: process.env.DATABASE_URL!
     },
     verbose: true,
-    strict: true
+    strict: true,
+    migrations: {
+        table: 'my-migrations-table', // `__drizzle_migrations` by default
+        schema: 'public', // used in PostgreSQL only, `drizzle` by default
+    },
 })
