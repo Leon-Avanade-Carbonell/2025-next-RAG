@@ -2,13 +2,15 @@ import {
   index,
   integer,
   pgTable,
+  primaryKey,
   serial,
   text,
   timestamp,
+  uniqueIndex,
   vector,
 } from 'drizzle-orm/pg-core'
 
-import { createInsertSchema, createUpdateSchema } from 'drizzle-zod'
+import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
 export const guidesTable = pgTable(
@@ -33,15 +35,26 @@ export const guidesTable = pgTable(
 export type InsertGuideType = typeof guidesTable.$inferInsert
 export type SelectGuideType = typeof guidesTable.$inferSelect
 
-export const pokemonTable = pgTable('pokemon', {
-  id: serial('id').primaryKey(),
-  pId: integer('p_id').unique().notNull(),
-  name: text('name').unique().notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at')
-    .notNull()
-    .$onUpdate(() => new Date()),
-})
+export const pokemonTable = pgTable(
+  'pokemon',
+  {
+    id: integer().generatedAlwaysAsIdentity(),
+    pId: integer().unique().notNull(),
+    name: text('name').unique().notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at')
+      .notNull()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => {
+    return [
+      {
+        pokemonIndex: uniqueIndex('pokemonIndex').on(table.name),
+        pk: primaryKey({ columns: [table.id] }),
+      },
+    ]
+  }
+)
 
 export const InsertPokemonSchema = createInsertSchema(pokemonTable, {
   name: z
@@ -52,19 +65,17 @@ export const InsertPokemonSchema = createInsertSchema(pokemonTable, {
     .max(255, {
       message: 'Pokemon name must be at most 255 characters long',
     }),
+  pId: z.coerce.number().int().positive().min(1, {
+    message: 'Pokemon ID must be a positive integer',
+  }),
 })
-// export const UpdatePokemonSchema = createUpdateSchema(pokemonTable, {
-//   name: z
-//     .string()
-//     .min(3, {
-//       message: 'Pokemon name must be at least 3 characters long',
-//     })
-//     .max(255, {
-//       message: 'Pokemon name must be at most 255 characters long',
-//     }),
-// })
 
-export type InsertPokemonType = z.infer<typeof InsertPokemonSchema>
+export const InsertPokemonSchemaClient = InsertPokemonSchema.omit({
+  createdAt: true,
+  updatedAt: true,
+})
+
+export type InsertPokemonType = z.infer<typeof InsertPokemonSchemaClient>
 
 // export type InsertPokemonType = typeof pokemonTable.$inferInsert
 // export type SelectPokemonType = typeof pokemonTable.$inferSelect

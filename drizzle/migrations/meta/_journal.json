@@ -15,6 +15,13 @@
       "when": 1737675345105,
       "tag": "0001_mysterious_celestials",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1738194995287,
+      "tag": "0002_true_arclight",
+      "breakpoints": true
     }
   ]
 }

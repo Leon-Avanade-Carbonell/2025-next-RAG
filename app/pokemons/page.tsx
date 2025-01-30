@@ -1,5 +1,5 @@
 import { getAllPokemonsAction } from './actions'
-import { AddPokemonForm } from './forms'
+import { AddPokemonDialog } from './dialogs'
 
 export default async function PokemonsPage() {
   const pokemons = await getAllPokemonsAction()
@@ -7,9 +7,7 @@ export default async function PokemonsPage() {
     <>
       <div>
         <div>Pokemons Page</div>
-        <div>
-          <AddPokemonForm />
-        </div>
+        <AddPokemonDialog />
         <div>
           {pokemons.map((pokemon) => (
             <div key={pokemon.id}>{pokemon.name}</div>
