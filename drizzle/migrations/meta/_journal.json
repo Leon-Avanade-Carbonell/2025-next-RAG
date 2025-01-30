@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1737601669754,
-      "tag": "0000_overjoyed_loa",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1737675345105,
-      "tag": "0001_mysterious_celestials",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1738194995287,
-      "tag": "0002_true_arclight",
+      "when": 1738195766845,
+      "tag": "0000_far_leopardon",
       "breakpoints": true
     }
   ]

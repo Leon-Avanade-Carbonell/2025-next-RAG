@@ -1,5 +1,5 @@
 {
-  "id": "89759fbc-c4f8-483d-abd9-363dbac432c8",
+  "id": "881623f3-0327-4b48-8437-24109a2fd759",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -53,12 +53,23 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "pokemon_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
         },
-        "p_id": {
-          "name": "p_id",
+        "pId": {
+          "name": "pId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -86,7 +97,22 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "pokemon_pId_unique": {
+          "name": "pokemon_pId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "pId"
+          ]
+        },
+        "pokemon_name_unique": {
+          "name": "pokemon_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

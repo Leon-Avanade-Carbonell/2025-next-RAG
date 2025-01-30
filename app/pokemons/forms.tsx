@@ -30,15 +30,15 @@ export function AddPokemonForm({ setOpen }: AddPokemonFormPropsType) {
 
   return (
     <form action={formAction}>
-      <div>
+      <div className="flex flex-col gap-4">
         <FormInputField
-          label="name"
+          label="Name"
           defaultValue={formState.data?.name}
           name="name"
           errors={formState.errors?.name}
         />
         <FormInputField
-          label="pokemon ID"
+          label="Pokemon ID"
           defaultValue={formState.data?.pId.toString()}
           name="pId"
           errors={formState.errors?.pId}

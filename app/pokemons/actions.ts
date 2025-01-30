@@ -36,6 +36,8 @@ export async function addPokemonAction(
       }
     }
 
+    await db.insert(pokemonTable).values(data)
+
     revalidatePath('/pokemons')
 
     return { success: true }
