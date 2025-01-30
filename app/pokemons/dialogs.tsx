@@ -10,9 +10,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useState } from 'react'
-import { AddPokemonForm, UpdatePokemonForm } from './forms'
+import { AddPokemonForm, DeletePokemonForm, UpdatePokemonForm } from './forms'
 import { SelectPokemonType } from '@/drizzle/db/schema'
-import { Pen } from 'lucide-react'
+import { Pen, Trash2 } from 'lucide-react'
 
 export function AddPokemonDialog() {
   const [open, setOpen] = useState(false)
@@ -45,7 +45,7 @@ export function EditPokemonDialog({ pokemon }: UpdatePokemonFormPropsType) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => setOpen(true)}>
+        <Button size="sm" variant="link" onClick={() => setOpen(true)}>
           <Pen />
         </Button>
       </DialogTrigger>
@@ -56,6 +56,33 @@ export function EditPokemonDialog({ pokemon }: UpdatePokemonFormPropsType) {
             Update the details of a pokemon in the database
           </DialogDescription>
           <UpdatePokemonForm setOpen={setOpen} pokemon={pokemon} />
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+type DeletePokemonFormPropsType = {
+  pokemon: SelectPokemonType
+}
+
+export function DeletePokemonDialog({ pokemon }: DeletePokemonFormPropsType) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button size="sm" variant="link" onClick={() => setOpen(true)}>
+          <Trash2 className="text-red-500" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete pokemon</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete the Pokemon {pokemon.name}?
+          </DialogDescription>
+          <DeletePokemonForm setOpen={setOpen} pokemon={pokemon} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

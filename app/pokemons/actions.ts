@@ -86,3 +86,32 @@ export async function updatePokemonAction(
     }
   }
 }
+
+export async function deletePokemonAction(
+  prevState: ActionResponseType<SelectPokemonType>,
+  formData: unknown
+): Promise<ActionResponseType<SelectPokemonType>> {
+  if (!(formData instanceof FormData))
+    return {
+      success: false,
+      errorMessage: 'Invalid form data',
+    }
+
+  const data = Object(
+    Object.fromEntries(formData.entries())
+  ) as SelectPokemonType
+  try {
+    await db.delete(pokemonTable).where(eq(pokemonTable.id, prevState.data!.id))
+
+    revalidatePath('/pokemons')
+
+    return { success: true }
+  } catch (error) {
+    return {
+      success: false,
+      errorMessage: (error as Error)?.message ?? 'Error updating pokemon',
+      data: { ...prevState.data, ...data },
+    }
+  }
+  // return db.delete(pokemonTable).where(eq(pokemonTable.id, pokemon.id))
+}
