@@ -1,18 +1,17 @@
+import { DataTable } from '@/helpers/table_helper'
 import { getAllPokemonsAction } from './actions'
 import { AddPokemonDialog } from './dialogs'
+import { pokemonTableColumns } from './forms'
 
 export default async function PokemonsPage() {
   const pokemons = await getAllPokemonsAction()
   return (
     <>
-      <div>
-        <div>Pokemons Page</div>
-        <AddPokemonDialog />
-        <div>
-          {pokemons.map((pokemon) => (
-            <div key={pokemon.id}>{pokemon.name}</div>
-          ))}
+      <div className="flex flex-col gap-3">
+        <div className="flex justify-end">
+          <AddPokemonDialog />
         </div>
+        <DataTable data={pokemons} columns={pokemonTableColumns} />
       </div>
     </>
   )

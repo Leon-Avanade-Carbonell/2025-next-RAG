@@ -10,7 +10,11 @@ import {
   vector,
 } from 'drizzle-orm/pg-core'
 
-import { createInsertSchema } from 'drizzle-zod'
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from 'drizzle-zod'
 import { z } from 'zod'
 
 export const guidesTable = pgTable(
@@ -56,6 +60,9 @@ export const pokemonTable = pgTable(
   }
 )
 
+export const SelectPokemonSchema = createSelectSchema(pokemonTable)
+export type SelectPokemonType = z.infer<typeof SelectPokemonSchema>
+
 export const InsertPokemonSchema = createInsertSchema(pokemonTable, {
   name: z
     .string()
@@ -77,5 +84,5 @@ export const InsertPokemonSchemaClient = InsertPokemonSchema.omit({
 
 export type InsertPokemonType = z.infer<typeof InsertPokemonSchemaClient>
 
-// export type InsertPokemonType = typeof pokemonTable.$inferInsert
-// export type SelectPokemonType = typeof pokemonTable.$inferSelect
+export const UpdatePokemonSchema = createUpdateSchema(pokemonTable)
+export type UpdatePokemonType = z.infer<typeof UpdatePokemonSchema>
