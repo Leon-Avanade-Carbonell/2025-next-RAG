@@ -86,3 +86,12 @@ export type InsertPokemonType = z.infer<typeof InsertPokemonSchemaClient>
 
 export const UpdatePokemonSchema = createUpdateSchema(pokemonTable)
 export type UpdatePokemonType = z.infer<typeof UpdatePokemonSchema>
+
+export const fringeTable = pgTable('fringe', {
+  id: serial('id').primaryKey(),
+  showId: text('showId').notNull().unique(),
+  title: text('title').notNull(),
+  excerpt: text('excerpt').notNull().default(''),
+  description: text('description').notNull().default(''),
+  embedding: vector('embedding', { dimensions: 1536 }),
+})
