@@ -15,6 +15,13 @@
       "when": 1738645306579,
       "tag": "0001_neat_killraven",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1738724831103,
+      "tag": "0002_brave_newton_destine",
+      "breakpoints": true
     }
   ]
 }

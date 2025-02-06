@@ -89,9 +89,12 @@ export type UpdatePokemonType = z.infer<typeof UpdatePokemonSchema>
 
 export const fringeTable = pgTable('fringe', {
   id: serial('id').primaryKey(),
-  showId: text('showId').notNull().unique(),
+  url: text('url').notNull(),
   title: text('title').notNull(),
+  genre: text('genre').notNull(),
   excerpt: text('excerpt').notNull().default(''),
   description: text('description').notNull().default(''),
   embedding: vector('embedding', { dimensions: 1536 }),
 })
+
+export type SelectShowType = typeof fringeTable.$inferSelect
