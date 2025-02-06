@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 export function SearchShows() {
   const [inputText, setInputText] = useState('')
 
-  const { data, mutate } = useMutation({
+  const { data, mutate, isPending } = useMutation({
     mutationFn: getAllShowsAction,
   })
 
@@ -24,17 +24,28 @@ export function SearchShows() {
           />
         </div>
         <div className="content-end">
-          <Button onClick={() => mutate(inputText)}>Search</Button>
+          <Button onClick={() => mutate(inputText)} disabled={isPending}>
+            Search
+          </Button>
         </div>
       </div>
       {data && (
-        <div className="my-2 flex flex-col gap-4">
-          {data.map((show) => (
-            <div key={show.id}>{show.title}</div>
-          ))}
-        </div>
+        <>
+          <div className="my-4 flex max-h-[83vh] flex-col gap-4 overflow-y-auto overflow-x-hidden">
+            {data.map((show) => (
+              <div key={show.id} className="mr-2 rounded-lg border-2 p-2">
+                <div>{show.title}</div>
+                <div>
+                  <span className="text-purple-500">{show.genre}</span> -{' '}
+                  {show.excerpt}
+                </div>
+                <div className="text-sm">{show.description}</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-end">Results: {data.length}</div>
+        </>
       )}
-      {/* <ShowList search={search} /> */}
     </>
   )
 }
