@@ -3,12 +3,24 @@
 import { Textarea } from './ui/textarea'
 import { Message, useChat } from 'ai/react'
 import { Button } from './ui/button'
+import Spinner from './spinner'
+
+export function MessageBubble({ message }: { message: Message }) {
+  const isUser = message.role === 'user'
+  return (
+    <div
+      className={`mx-2 mt-2 flex p-2 border-sm border-2 ${isUser ? 'border-yellow-700 text-yellow-700 text-right' : 'border-green-700 text-green-700 text-left'}`}
+    >
+      {message.content.length <= 1 ? <Spinner /> : message.content}
+    </div>
+  )
+}
 
 export function MessagesArea({ messages }: { messages: Message[] }) {
   return (
-    <div className="mx-auto flex min-h-[300px] w-full max-w-3xl flex-col bg-blue-300 p-2">
-      {messages.map((message) => (
-        <div key={message.id}>{message.content}</div>
+    <div className="mx-auto flex max-h-[80vh] min-h-[300px] w-full max-w-3xl flex-col overflow-y-auto">
+      {messages.map((message, mId) => (
+        <MessageBubble key={mId} message={message} />
       ))}
     </div>
   )
@@ -16,8 +28,9 @@ export function MessagesArea({ messages }: { messages: Message[] }) {
 
 type IChatAreaProps = { height?: string }
 export function ChatArea({ height = '100vh' }: IChatAreaProps) {
-  const { messages, input, setInput, error, isLoading, handleSubmit } =
-    useChat()
+  const { messages, input, setInput, error, isLoading, handleSubmit } = useChat(
+    { api: '/api/fringe' }
+  )
 
   return (
     <div
